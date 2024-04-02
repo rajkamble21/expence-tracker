@@ -1,0 +1,61 @@
+
+
+.list1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+  }
+  
+  .left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+  .left > img {
+    margin: 10px;
+  }
+  
+  .title1 {
+    color: #000000;
+    margin: 2px;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .date1 {
+    color: #9b9b9b;
+    margin: 2px;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  
+  .right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .right > span {
+    color: #f4bb4a;
+    font-size: 16px;
+    font-weight: 700;
+    margin-right: 20px;
+  }
+
+  .right > img {
+    cursor: pointer;
+  }
+  
+  .hr {
+    border: 1px solid #9b9b9b;
+  }
+
+  .no-transactions {
+    color: #9b9b9b;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+    margin-top: 25px;
+  }
