@@ -6,6 +6,9 @@ import Trasanction from "./Components/Trasanction";
 import { useSnackbar } from "notistack";
 
 import "./App.css";
+import BalanceForm from "./Components/BalanceForm";
+import ExpenceForm from "./Components/ExpenceForm";
+import EditExpenceForm from "./Components/EditExpenceForm";
 
 function App() {
   const { enqueueSnackbar } = useSnackbar();
@@ -115,6 +118,12 @@ function App() {
       const updatedExpenceTotal = expence + priceDifference;
       const updatedBalance = balance - priceDifference;
 
+      if (updatedBalance < 0) {
+        enqueueSnackbar("Do not have balance", { variant: "error" });
+        setEditExpenceModal(!editExpenceModal);
+        return;
+      }
+
       setExpence(updatedExpenceTotal);
       setBalance(updatedBalance);
 
@@ -216,144 +225,41 @@ function App() {
         </div>
       </div>
 
-      {balanceModal && (
-        <div className="modal">
-          <div className="box">
-            <h2>Income Amount</h2>
-            <div className="input-row">
-              <input
-                type="text"
-                placeholder="income amount"
-                value={incomeAmount}
-                onChange={(e) => {
-                  setIncomeAmount(e.target.value);
-                }}
-              />
-              <button
-                className="add"
-                onClick={(e) => {
-                  addBalance();
-                }}
-              >
-                {" "}
-                Add Income{" "}
-              </button>
-              <button
-                className="cancel"
-                onClick={(e) => {
-                  setBalanceModal(!balanceModal);
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <BalanceForm
+        balanceModal={balanceModal}
+        incomeAmount={incomeAmount}
+        setIncomeAmount={setIncomeAmount}
+        addBalance={addBalance}
+        setBalanceModal={setBalanceModal}
+      />
 
-      {expenceModal && (
-        <div className="modal">
-          <div className="box">
-            <h2>Add Expenses</h2>
-            <div className="input-row">
-              <input
-                type="text"
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Price"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              />
-            </div>
-            <div className="input-row">
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <option value="Food">Food</option>
-                <option value="Entertainment">Entertainment</option>
-                <option value="Travel">Travel</option>
-              </select>
-              <input
-                type="date"
-                placeholder="dd/mm/yy"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-              />
-            </div>
-            <div className="input-row">
-              <button className="add" onClick={addExpences}>
-                {" "}
-                Add Expense{" "}
-              </button>
-              <button
-                className="cancel"
-                onClick={(e) => {
-                  setExpenceModal(!expenceModal);
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ExpenceForm
+        expenceModal={expenceModal}
+        title={title}
+        setTitle={setTitle}
+        price={price}
+        setPrice={setPrice}
+        category={category}
+        setCategory={setCategory}
+        date={date}
+        setDate={setDate}
+        addExpences={addExpences}
+        setExpenceModal={setExpenceModal}
+      />
 
-      {editExpenceModal && (
-        <div className="modal">
-          <div className="box">
-            <h2>Edit Expenses</h2>
-            <div className="input-row">
-              <input
-                type="text"
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Price"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              />
-            </div>
-            <div className="input-row">
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <option value="Food">Food</option>
-                <option value="Entertainment">Entertainment</option>
-                <option value="Travel">Travel</option>
-              </select>
-              <input
-                type="date"
-                placeholder="dd/mm/yy"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-              />
-            </div>
-            <div className="input-row">
-              <button className="add" onClick={updateExpence}>
-                {" "}
-                Edit Expense{" "}
-              </button>
-              <button
-                className="cancel"
-                onClick={(e) => {
-                  setEditExpenceModal(!editExpenceModal);
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <EditExpenceForm
+        editExpenceModal={editExpenceModal}
+        title={title}
+        setTitle={setTitle}
+        price={price}
+        setPrice={setPrice}
+        category={category}
+        setCategory={setCategory}
+        date={date}
+        setDate={setDate}
+        updateExpence={updateExpence}
+        setEditExpenceModal={setEditExpenceModal}
+      />
     </>
   );
 }
