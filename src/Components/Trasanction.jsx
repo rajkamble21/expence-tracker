@@ -8,7 +8,7 @@ import left from "../images/left.png";
 import right from "../images/right.png";
 import "./Trasanction.css";
 
-const Trasanction = ({ data, removeExpenses, editExpense }) => {
+const Trasanction = ({ data, removeExpences, editExpense }) => {
   const categoryImages = {
     Food: foodImage,
     Entertainment: entertainmentImage,
@@ -18,8 +18,8 @@ const Trasanction = ({ data, removeExpenses, editExpense }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;
 
-  const indexOfLastItem = Math.min(currentPage * itemsPerPage, data.length);
-  const indexOfFirstItem = Math.max(indexOfLastItem - itemsPerPage, 0);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -58,9 +58,13 @@ const Trasanction = ({ data, removeExpenses, editExpense }) => {
               <img
                 src={cancelImage}
                 alt=""
-                onClick={() => removeExpenses(item.id)}
+                onClick={() => removeExpences(item.id)}
               />
-              <img src={editImage} alt="" onClick={() => editExpense(item.id)} />
+              <img
+                src={editImage}
+                alt=""
+                onClick={() => editExpense(item.id)}
+              />
             </div>
           </div>
           <hr className="hr" />
