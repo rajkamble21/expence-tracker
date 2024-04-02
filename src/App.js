@@ -27,7 +27,19 @@ function App() {
   const [incomeAmount, setIncomeAmount] = useState(null);
 
   const addBalance = () => {
-    let update = balance + parseInt(incomeAmount);
+    if (incomeAmount === "") {
+      enqueueSnackbar("Income amount cannot be empty.", { variant: "error" });
+      return;
+    }
+
+    if (isNaN(parseFloat(incomeAmount))) {
+      enqueueSnackbar("Please enter a valid number for income amount.", {
+        variant: "error",
+      });
+      return;
+    }
+
+    let update = balance + parseFloat(incomeAmount);
     setBalance(update);
     setIncomeAmount("");
     setBalanceModal(!balanceModal);
@@ -40,6 +52,18 @@ function App() {
   const [date, setDate] = useState("");
 
   const addExpences = () => {
+
+    if (!title || !price || !category || !date) {
+      enqueueSnackbar("Please fill in all fields.", { variant: "error" });
+      return;
+    }
+
+    if (isNaN(parseFloat(price))) {
+      enqueueSnackbar("Price must be a valid number.", { variant: "error" });
+      return;
+    }
+
+
     const id = uuidv4();
     const newExpense = {
       id: id,
@@ -49,8 +73,8 @@ function App() {
       date: date,
     };
 
-    let updateExpence = expence + parseInt(price);
-    let updateBalance = balance - parseInt(price);
+    let updateExpence = expence + parseFloat(price);
+    let updateBalance = balance - parseFloat(price);
 
     if (updateBalance < 0) {
       enqueueSnackbar("Do not have balance", { variant: "error" });
@@ -81,8 +105,8 @@ function App() {
       (expense) => expense.id === itemId
     );
 
-    const updatedExpenseTotal = expence - parseInt(expenseToRemove.price);
-    const updatedBalance = balance + parseInt(expenseToRemove.price);
+    const updatedExpenseTotal = expence - parseFloat(expenseToRemove.price);
+    const updatedBalance = balance + parseFloat(expenseToRemove.price);
 
     const updatedExpenses = expenceList.filter(
       (expense) => expense.id !== itemId
@@ -110,10 +134,21 @@ function App() {
   };
 
   const updateExpence = () => {
+
+    if (!title || !price || !category || !date) {
+      enqueueSnackbar("Please fill in all fields.", { variant: "error" });
+      return;
+    }
+
+    if (isNaN(parseFloat(price))) {
+      enqueueSnackbar("Price must be a valid number.", { variant: "error" });
+      return;
+    }
+    
     const index = expenceList.findIndex((expense) => expense.id === editId);
     if (index !== -1) {
       const priceDifference =
-        parseInt(price) - parseInt(expenceList[index].price);
+      parseFloat(price) - parseFloat(expenceList[index].price);
 
       const updatedExpenceTotal = expence + priceDifference;
       const updatedBalance = balance - priceDifference;
@@ -151,10 +186,10 @@ function App() {
 
   useEffect(() => {
     if (localStorage.getItem("balance")) {
-      setBalance(parseInt(localStorage.getItem("balance")));
+      setBalance(parseFloat(localStorage.getItem("balance")));
     }
     if (localStorage.getItem("expence")) {
-      setExpence(parseInt(localStorage.getItem("expence")));
+      setExpence(parseFloat(localStorage.getItem("expence")));
     }
     if (localStorage.getItem("expenceList")) {
       setExpenceList(JSON.parse(localStorage.getItem("expenceList")));
